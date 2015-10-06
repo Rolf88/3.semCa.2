@@ -20,7 +20,8 @@ public abstract class InfoEntity implements Serializable {
 
     private String email;
 
-    @OneToMany(mappedBy = "InfoEntity")
+    
+    @OneToMany(mappedBy = "entity")
     private List<Phone> phones;
 
     @ManyToOne
