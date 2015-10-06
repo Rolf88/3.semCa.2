@@ -24,7 +24,6 @@ public class PersonFacade implements Closeable {
 
     public PersonFacade(EntityManagerFactory factory) {
         this.entityManager = factory.createEntityManager();
-        this.entityManager.getTransaction().begin();
     }
 
     public Person getPerson(int id) {
@@ -60,7 +59,6 @@ public class PersonFacade implements Closeable {
 
     @Override
     public void close() {
-        this.entityManager.getTransaction().commit();
         this.entityManager.close();
     }
 
