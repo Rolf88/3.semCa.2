@@ -21,6 +21,8 @@ public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String firstName;
+    private String lastName;
 
     public Long getId() {
         return id;

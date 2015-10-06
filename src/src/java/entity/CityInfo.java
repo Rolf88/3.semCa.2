@@ -21,7 +21,8 @@ public class CityInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String email;
+    private int zipCode;
+    private String city;
 
     public Long getId() {
         return id;
