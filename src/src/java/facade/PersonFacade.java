@@ -42,13 +42,21 @@ public class PersonFacade implements Closeable {
         return persons;
     }
 
-//    public List<Person> getPersons(int zipCode) {
-//    }
-//
-//    public Company getCompany(cvr) {
-//        Long longId = (long) cvr;
-//        return this.entityManager.find(Person.class, longId);
-//    }
+    public List<Person> getPersons(int zipCode) {
+        List persons;
+        
+        Query createQuery = this.entityManager.createQuery("SELECT p.address.zip FROM Address INNER JOIN Person");
+        
+        persons = createQuery.getResultList();
+        
+        return persons;
+        
+    }
+
+    public Company getCompany(long cvr) {
+        Long longId = (long) cvr;
+        return this.entityManager.find(Company.class, cvr);
+    }
 
     @Override
     public void close() {
