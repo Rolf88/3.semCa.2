@@ -9,12 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class InfoEntity implements Serializable {
+public abstract class InfoEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String email;
+
     @OneToMany(mappedBy = "InfoEntity")
     private List<Phone> phones;
 
@@ -50,5 +54,5 @@ public class InfoEntity implements Serializable {
     public String toString() {
         return "entity.InfoEntity[ id=" + id + " ]";
     }
-    
+
 }
