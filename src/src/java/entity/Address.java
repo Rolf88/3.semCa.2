@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -31,6 +32,9 @@ public class Address implements Serializable {
     @Column(nullable = false)
     private String additionalInfo;
 
+    @ManyToOne
+    private CityInfo city;
+    
     public Long getId() {
         return id;
     }

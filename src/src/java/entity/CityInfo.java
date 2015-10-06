@@ -6,11 +6,13 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -30,6 +32,9 @@ public class CityInfo implements Serializable {
 
     @Column(nullable = false)
     private String zipCode;
+
+    @OneToMany(mappedBy = "city")
+    private List<Address> addresses;
 
     public Long getId() {
         return id;
@@ -53,6 +58,10 @@ public class CityInfo implements Serializable {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    public List<Address> getAddresses() {
+        return this.addresses;
     }
 
     @Override
