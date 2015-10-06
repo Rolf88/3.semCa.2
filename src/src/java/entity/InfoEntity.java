@@ -2,14 +2,17 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
+@javax.persistence.Inheritance(strategy = InheritanceType.JOINED)
 public abstract class InfoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -21,10 +24,10 @@ public abstract class InfoEntity implements Serializable {
     private String email;
 
     
-    @OneToMany(mappedBy = "entity")
+    @OneToMany(mappedBy = "entity", cascade = CascadeType.PERSIST)
     private List<Phone> phones;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Address address;
 
     public Long getId() {

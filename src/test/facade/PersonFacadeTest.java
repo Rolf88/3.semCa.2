@@ -17,14 +17,14 @@ public class PersonFacadeTest {
 
     @Before
     public void setUp() {
-        this.personFacade = new PersonFacade(Persistence.createEntityManagerFactory("3.semCa.2PU"));
+        this.personFacade = new PersonFacade(Persistence.createEntityManagerFactory("3.semCa.3PU"));
     }
 
     @Test
     public void testIsAbleToGetAPerson() {
         Person person = this.personFacade.getPerson(1);
 
-        assertNotNull(person);
+        assertNotNull("person is null", person);
         assertEquals("Kim", person.getFirstName());
         assertEquals("Larsen", person.getLastName());
 
@@ -55,7 +55,7 @@ public class PersonFacadeTest {
 
     @Test
     public void testIsAbleToGetAListPersons_ByZipcode() {
-        int zipCode = 2200;
+        String zipCode = "2200";
         List<Person> persons = this.personFacade.getPersons(zipCode);
 
         assertNotNull(persons);
@@ -70,7 +70,7 @@ public class PersonFacadeTest {
 
     @Test
     public void testIsAbleToFindACompanyByCVR() {
-        long cvr = 123456789;
+        String cvr = "123456789";
         Company company = this.personFacade.getCompany(cvr);
 
         assertNotNull(company);

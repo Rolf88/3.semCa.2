@@ -6,7 +6,6 @@
 package facade;
 
 import entity.Company;
-import static entity.Company_.cvr;
 import entity.Person;
 import java.io.Closeable;
 import java.util.List;
@@ -27,39 +26,32 @@ public class PersonFacade implements Closeable {
     }
 
     public Person getPerson(int id) {
-        Long longId = (long) id;
-        return this.entityManager.find(Person.class, longId);
+        return this.entityManager.find(Person.class, (long) id);
     }
 
     public List<Person> getPersons() {
-        List persons;
-
         Query createQuery = this.entityManager.createQuery("SELECT p FROM Person p");
 
-        persons = createQuery.getResultList();
-
-        return persons;
+        return createQuery.getResultList();
     }
 
-    public List<Person> getPersons(int zipCode) {
-        List persons;
-        
-        Query createQuery = this.entityManager.createQuery("SELECT p.address.zip FROM Address INNER JOIN Person");
-        
-        persons = createQuery.getResultList();
-        
-        return persons;
-        
+    public List<Person> getPersons(String zipCode) {
+        Query query = this.entityManager.createQuery("SELECT p FROM Person p WHERE p.address.city.zip = :zipCode");
+        query.setParameter("zipCode", zipCode);
+
+        return query.getResultList();
+
     }
 
-    public Company getCompany(long cvr) {
-        Long longId = (long) cvr;
-        return this.entityManager.find(Company.class, cvr);
+    public Company getCompany(String cvr) {
+        Query query = this.entityManager.createQuery("SELECT c FROM Company c WHERE c.cvr = :cvr");
+        query.setParameter("cvr", cvr);
+
+        return (Company) query.getSingleResult();
     }
 
     @Override
     public void close() {
         this.entityManager.close();
     }
-
 }

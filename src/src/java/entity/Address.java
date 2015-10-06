@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class Address implements Serializable {
     @Column(nullable = false)
     private String additionalInfo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private CityInfo city;
 
     @OneToMany(mappedBy = "address")
