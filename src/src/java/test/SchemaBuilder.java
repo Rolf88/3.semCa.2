@@ -5,7 +5,6 @@
  */
 package test;
 
-import entity.Person;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -16,5 +15,6 @@ import javax.persistence.Persistence;
 public class SchemaBuilder {
     public static void main(String[] args) {
         Persistence.generateSchema("3.semCa.2PU", null);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("3.semCa.2PU");
     }
 }
