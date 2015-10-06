@@ -1,11 +1,13 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Person extends InfoEntity implements Serializable {
@@ -20,6 +22,9 @@ public class Person extends InfoEntity implements Serializable {
 
     @Column(nullable = false)
     private String lastName;
+
+    @ManyToMany
+    private List<Hobby> hobbies;
 
     public Long getId() {
         return id;
@@ -43,6 +48,10 @@ public class Person extends InfoEntity implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<Hobby> getHobbies() {
+        return this.hobbies;
     }
 
     @Override
