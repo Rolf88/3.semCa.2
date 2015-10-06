@@ -25,7 +25,7 @@ public class Address implements Serializable {
 
     @ManyToOne
     private CityInfo city;
-    
+
     public Long getId() {
         return id;
     }
