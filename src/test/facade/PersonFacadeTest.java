@@ -54,6 +54,14 @@ public class PersonFacadeTest {
     }
 
     @Test
+    public void testIsAbleToGetAListPersons_ByHobby() {
+        List<Person> persons = this.personFacade.findPersonsWithHobby("Fishing");
+
+        assertNotNull(persons);
+        assertEquals(1, persons.size());
+    }
+
+    @Test
     public void testIsAbleToGetAListPersons_ByZipcode() {
         String zipCode = "2200";
         List<Person> persons = this.personFacade.getPersons(zipCode);
