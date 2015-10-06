@@ -16,7 +16,8 @@ import javax.persistence.Id;
  * @author RolfMoikjær
  */
 @Entity
-public class Adress implements Serializable {
+public class Address implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,10 +41,10 @@ public class Adress implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Adress)) {
+        if (!(object instanceof Address)) {
             return false;
         }
-        Adress other = (Adress) object;
+        Address other = (Address) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -54,5 +55,5 @@ public class Adress implements Serializable {
     public String toString() {
         return "entity.Adress[ id=" + id + " ]";
     }
-    
+
 }
