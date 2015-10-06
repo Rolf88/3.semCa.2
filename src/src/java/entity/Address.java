@@ -66,6 +66,14 @@ public class Address implements Serializable {
         return this.entities;
     }
 
+    public CityInfo getCity() {
+        return city;
+    }
+
+    public void setCity(CityInfo city) {
+        this.city = city;
+    }
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
