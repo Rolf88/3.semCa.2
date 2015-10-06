@@ -1,0 +1,8 @@
+src/nbproject/private/
+src/build/
+src/nbbuild/
+src/dist/
+src/nbdist/
+src/nbactions.xml
+src/nb-configuration.xml
+src/.nb-gradle/
