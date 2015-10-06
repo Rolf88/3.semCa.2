@@ -2,53 +2,60 @@ package entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
 public class Company extends InfoEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+
     private String name;
+
     private String description;
+
     private String cvr;
+
     private int numEmployees;
+
     private int marketValue;
-    
-    public Long getId() {
-        return id;
+
+    public String getName() {
+        return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public String getDescription() {
+        return description;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Company)) {
-            return false;
-        }
-        Company other = (Company) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "entity.Company[ id=" + id + " ]";
+    public String getCvr() {
+        return cvr;
     }
-    
+
+    public void setCvr(String cvr) {
+        this.cvr = cvr;
+    }
+
+    public int getNumEmployees() {
+        return numEmployees;
+    }
+
+    public void setNumEmployees(int numEmployees) {
+        this.numEmployees = numEmployees;
+    }
+
+    public int getMarketValue() {
+        return marketValue;
+    }
+
+    public void setMarketValue(int marketValue) {
+        this.marketValue = marketValue;
+    }
+
 }

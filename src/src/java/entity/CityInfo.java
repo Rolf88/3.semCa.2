@@ -17,12 +17,12 @@ public class CityInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @Column(nullable = false)
     private String city;
 
     @Column(nullable = false)
-    private String zipCode;
+    private String zip;
 
     @OneToMany(mappedBy = "city")
     private List<Address> addresses;
@@ -43,12 +43,12 @@ public class CityInfo implements Serializable {
         this.city = city;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getZip() {
+        return zip;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
     public List<Address> getAddresses() {
