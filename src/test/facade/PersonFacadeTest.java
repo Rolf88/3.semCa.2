@@ -132,4 +132,35 @@ public class PersonFacadeTest {
         assertNull(createdPerson.getAddress());
         assertEquals(0, createdPerson.getHobbies().size());
     }
+    
+    @Test
+    public void testAddPerson_IsAbleToCreateANewPerson_WithHobbies_AndNoAddress() {
+        Person personToCreate = new Person();
+        personToCreate.setFirstName("Mads");
+        personToCreate.setLastName("Mikkelsen");
+        personToCreate.setEmail("mads@mikkelsen.dk");
+
+        Hobby eatingHobby = new Hobby();
+        eatingHobby.setName("Eating");
+        eatingHobby.setDescription("I like to eat");
+        
+        Hobby runningHobby = new Hobby();
+        runningHobby.setName("Running");
+        runningHobby.setDescription("Can run a mile");
+        
+        personToCreate.getHobbies().add(eatingHobby);
+        personToCreate.getHobbies().add(runningHobby);
+        
+        int numberOfPersons = this.personFacade.getPersons().size();
+
+        Person createdPerson = this.personFacade.addPerson(personToCreate);
+
+        assertEquals(numberOfPersons + 1, this.personFacade.getPersons().size());
+        assertNotNull(createdPerson);
+        assertEquals(personToCreate.getFirstName(), createdPerson.getFirstName());
+        assertEquals(personToCreate.getLastName(), createdPerson.getLastName());
+        assertEquals(personToCreate.getEmail(), createdPerson.getEmail());
+        assertNull(createdPerson.getAddress());
+        assertEquals(2, createdPerson.getHobbies().size());
+    }
 }
