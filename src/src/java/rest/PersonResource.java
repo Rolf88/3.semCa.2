@@ -6,12 +6,9 @@
 package rest;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import entity.Hobby;
 import entity.Person;
 import facade.PersonFacade;
+import infrastructure.IPersonFacade;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Persistence;
@@ -23,7 +20,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import rest.jsonconverter.JSONConverter;
@@ -40,14 +36,18 @@ public class PersonResource {
     @Context
     private UriInfo context;
 
-    private PersonFacade facade;
+    private IPersonFacade facade;
     private Gson gson;
 
     /**
      * Creates a new instance of PersonResource
      */
     public PersonResource() {
-        facade = new PersonFacade(Persistence.createEntityManagerFactory("3.semCa.3PU"));
+        this(new PersonFacade(Persistence.createEntityManagerFactory("3.semCa.3PU")));
+    }
+
+    public PersonResource(IPersonFacade personFacade) {
+        this.facade = personFacade;
         gson = new Gson();
     }
 
@@ -63,7 +63,7 @@ public class PersonResource {
         
         return Response.ok(JSONConverter.PersonToJSON(p)).build();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("contactinfo/{id}")
@@ -78,14 +78,14 @@ public class PersonResource {
         
         return Response.ok(JSONConverter.ContactInfoPersonToJSON(cp)).build();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("complete")
     public Response getPersonsComplete() {
         List<Person> p = facade.getPersons();
-        
-        if(p.isEmpty()){
+
+        if (p.isEmpty()) {
             throw new NullPointerException();
         }
         

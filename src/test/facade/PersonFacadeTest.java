@@ -159,11 +159,9 @@ public class PersonFacadeTest {
         personToCreate.getHobbies().add(eatingHobby);
         personToCreate.getHobbies().add(runningHobby);
 
-        int numberOfPersons = this.personFacade.getPersons().size();
-
         Person createdPerson = this.personFacade.addPerson(personToCreate);
 
-        assertEquals(numberOfPersons + 1, this.personFacade.getPersons().size());
+        assertEquals(4, this.personFacade.getPersons().size());
         assertNotNull(createdPerson);
         assertEquals(personToCreate.getFirstName(), createdPerson.getFirstName());
         assertEquals(personToCreate.getLastName(), createdPerson.getLastName());
@@ -171,7 +169,7 @@ public class PersonFacadeTest {
         assertNull(createdPerson.getAddress());
         assertEquals(2, createdPerson.getHobbies().size());
     }
-    
+
     @Test
     public void testAddCompany_IsAbleToCreateANewCompany() {
         Company companyToCreate = new Company();
@@ -189,5 +187,49 @@ public class PersonFacadeTest {
         assertEquals(companyToCreate.getDescription(), createdCompany.getDescription());
         assertEquals(companyToCreate.getMarketValue(), createdCompany.getMarketValue());
         assertEquals(companyToCreate.getNumEmployees(), createdCompany.getNumEmployees());
+    }
+
+    @Test
+    public void testAddCompany_IsAbleToCreateANewCompany_WithAAddress() {
+        CityInfo city = new CityInfo();
+        city.setCity("CompanyCity");
+        city.setZip("24234C");
+
+        Address address = new Address();
+        address.setStreet("Company Road 2");
+        address.setAdditionalInfo("Companty");
+        address.setCity(city);
+
+        Company companyToCreate = new Company();
+        companyToCreate.setCvr("123123123");
+        companyToCreate.setDescription("CompnayBedes");
+        companyToCreate.setName("fsiodjgsdfg");
+        companyToCreate.setMarketValue(1233453);
+        companyToCreate.setNumEmployees(9);
+        companyToCreate.setAddress(address);
+
+        Company createdCompany = this.personFacade.addCompany(companyToCreate);
+
+        assertNotNull(createdCompany);
+        assertEquals(companyToCreate.getName(), createdCompany.getName());
+        assertEquals(companyToCreate.getCvr(), createdCompany.getCvr());
+        assertEquals(companyToCreate.getDescription(), createdCompany.getDescription());
+        assertEquals(companyToCreate.getMarketValue(), createdCompany.getMarketValue());
+        assertEquals(companyToCreate.getNumEmployees(), createdCompany.getNumEmployees());
+        assertEquals(companyToCreate.getAddress(), createdCompany.getAddress());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testDeletePerson_ShouldThrowExceptionIfPersonIsNull() {
+        this.personFacade.deletePerson(null);
+    }
+    
+    @Test
+    public void testDeletePerson_IsAbleToDelete() {
+        Person person = this.personFacade.getPerson(1);
+        
+        this.personFacade.deletePerson(person);
+        
+        assertEquals(2, this.personFacade.getPersons().size());
     }
 }
