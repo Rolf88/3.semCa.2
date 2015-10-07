@@ -190,4 +190,34 @@ public class PersonFacadeTest {
         assertEquals(companyToCreate.getMarketValue(), createdCompany.getMarketValue());
         assertEquals(companyToCreate.getNumEmployees(), createdCompany.getNumEmployees());
     }
+
+    @Test
+    public void testAddCompany_IsAbleToCreateANewCompany_WithAAddress() {
+        CityInfo city = new CityInfo();
+        city.setCity("CompanyCity");
+        city.setZip("24234C");
+
+        Address address = new Address();
+        address.setStreet("Company Road 2");
+        address.setAdditionalInfo("Companty");
+        address.setCity(city);
+
+        Company companyToCreate = new Company();
+        companyToCreate.setCvr("123123123");
+        companyToCreate.setDescription("CompnayBedes");
+        companyToCreate.setName("fsiodjgsdfg");
+        companyToCreate.setMarketValue(1233453);
+        companyToCreate.setNumEmployees(9);
+        companyToCreate.setAddress(address);
+
+        Company createdCompany = this.personFacade.addCompany(companyToCreate);
+
+        assertNotNull(createdCompany);
+        assertEquals(companyToCreate.getName(), createdCompany.getName());
+        assertEquals(companyToCreate.getCvr(), createdCompany.getCvr());
+        assertEquals(companyToCreate.getDescription(), createdCompany.getDescription());
+        assertEquals(companyToCreate.getMarketValue(), createdCompany.getMarketValue());
+        assertEquals(companyToCreate.getNumEmployees(), createdCompany.getNumEmployees());
+        assertEquals(companyToCreate.getAddress(), createdCompany.getAddress());
+    }
 }
