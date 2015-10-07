@@ -8,6 +8,7 @@ package rest;
 import com.google.gson.Gson;
 import entity.Person;
 import facade.PersonFacade;
+import infrastructure.IPersonFacade;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Persistence;
@@ -19,8 +20,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import rest.models.ContactInfoPerson;
 
 /**
@@ -34,7 +33,7 @@ public class PersonResource {
     @Context
     private UriInfo context;
 
-    private PersonFacade facade;
+    private IPersonFacade facade;
     private Gson gson;
 
     /**
@@ -44,7 +43,7 @@ public class PersonResource {
         this(new PersonFacade(Persistence.createEntityManagerFactory("3.semCa.3PU")));
     }
 
-    public PersonResource(PersonFacade personFacade) {
+    public PersonResource(IPersonFacade personFacade) {
         this.facade = personFacade;
         gson = new Gson();
     }
