@@ -69,6 +69,18 @@ public class PersonFacade implements Closeable {
 
         return person;
     }
+    
+    public Company addCompany(Company company) {
+        if (company == null) {
+            throw new NullPointerException("company cannot be null");
+        }
+
+        this.entityManager.getTransaction().begin();
+        this.entityManager.persist(company);
+        this.entityManager.getTransaction().commit();
+
+        return company;
+    }
 
     @Override
     public void close() {
