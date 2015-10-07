@@ -22,6 +22,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import rest.exceptions.PersonNotFoundException;
 import rest.jsonconverter.JSONConverter;
 import rest.models.ContactInfoPerson;
 
@@ -54,11 +55,11 @@ public class PersonResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("complete/{id}")
-    public Response getPersonComplete(@PathParam("id") int id) {
+    public Response getPersonComplete(@PathParam("id") int id) throws PersonNotFoundException {
         Person p = facade.getPerson(id);
 
         if (p == null) {
-            throw new NullPointerException();
+            throw new PersonNotFoundException("Person with given id not found");
         }
         
         return Response.ok(JSONConverter.PersonToJSON(p)).build();
@@ -67,11 +68,11 @@ public class PersonResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("contactinfo/{id}")
-    public Response getPersonContactInfo(@PathParam("id") int id) {
+    public Response getPersonContactInfo(@PathParam("id") int id) throws PersonNotFoundException {
         Person p = facade.getPerson(id);
 
         if (p == null) {
-            throw new NullPointerException();
+            throw new PersonNotFoundException("Person with given id not found");
         }
 
         ContactInfoPerson cp = new ContactInfoPerson(p.getFirstName(), p.getLastName(), p.getPhones(), p.getEmail());
@@ -82,11 +83,11 @@ public class PersonResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("complete")
-    public Response getPersonsComplete() {
+    public Response getPersonsComplete() throws PersonNotFoundException {
         List<Person> p = facade.getPersons();
 
         if (p.isEmpty()) {
-            throw new NullPointerException();
+            throw new PersonNotFoundException("No persons found");
         }
         
         return Response.ok(JSONConverter.PersonToJSON(p)).build();
@@ -95,11 +96,11 @@ public class PersonResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("contactinfo")
-    public Response getPersonsContactInfo() {
+    public Response getPersonsContactInfo() throws PersonNotFoundException {
         List<Person> persons = facade.getPersons();
         
         if(persons.isEmpty()){
-            throw new NullPointerException();
+            throw new PersonNotFoundException("No persons found");
         }
         
         List<ContactInfoPerson> cPersons = new ArrayList();
@@ -119,7 +120,7 @@ public class PersonResource {
         Person p = gson.fromJson(json, Person.class);
         
         if(p.getFirstName().isEmpty() || p.getLastName().isEmpty() || p.getEmail().isEmpty()){
-            throw new IndexOutOfBoundsException();
+            throw new NullPointerException("Firstname, lastname and email must be provided");
         }
         
         p = facade.addPerson(p);
