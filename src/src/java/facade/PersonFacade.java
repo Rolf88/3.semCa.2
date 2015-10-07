@@ -11,7 +11,6 @@ import java.io.Closeable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 /**
@@ -69,7 +68,17 @@ public class PersonFacade implements Closeable {
 
         return person;
     }
-    
+
+    public void deletePerson(Person person) {
+        if (person == null) {
+            throw new NullPointerException("person cannot be null");
+        }
+
+        this.entityManager.getTransaction().begin();
+        this.entityManager.remove(person);
+        this.entityManager.getTransaction().commit();
+    }
+
     public Company addCompany(Company company) {
         if (company == null) {
             throw new NullPointerException("company cannot be null");
