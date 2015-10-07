@@ -63,18 +63,23 @@ public class PersonFacade implements Closeable {
             throw new NullPointerException("person cannot be null");
         }
 
-        EntityTransaction transaction = this.entityManager.getTransaction();
+        this.entityManager.getTransaction().begin();
+        this.entityManager.persist(person);
+        this.entityManager.getTransaction().commit();
 
-        try {
-            transaction.begin();
-            this.entityManager.persist(person);
-            transaction.commit();
-
-            return person;
-        } catch (Exception ex) {
-            transaction.rollback();
-            throw ex;
+        return person;
+    }
+    
+    public Company addCompany(Company company) {
+        if (company == null) {
+            throw new NullPointerException("company cannot be null");
         }
+
+        this.entityManager.getTransaction().begin();
+        this.entityManager.persist(company);
+        this.entityManager.getTransaction().commit();
+
+        return company;
     }
 
     @Override

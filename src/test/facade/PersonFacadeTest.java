@@ -5,7 +5,9 @@ import entity.CityInfo;
 import entity.Company;
 import entity.Hobby;
 import entity.Person;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Persistence;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -15,11 +17,17 @@ public class PersonFacadeTest {
 
     private PersonFacade personFacade;
 
+    private static int runIndex = 0;
+
     @Before
     public void setUp() {
-        Persistence.generateSchema("3.semCa.3PU", null);
+        // This is need to drop and create the tables for every run
+        Map<String, String> props = new HashMap<>();
+        props.put("weblogic.application-id", "test-run-" + (++runIndex));
 
-        this.personFacade = new PersonFacade(Persistence.createEntityManagerFactory("3.semCa.3PU"));
+        Persistence.generateSchema("3.semCa.3PU", props);
+
+        this.personFacade = new PersonFacade(Persistence.createEntityManagerFactory("3.semCa.3PU", props));
     }
 
     @Test
@@ -131,5 +139,55 @@ public class PersonFacadeTest {
         assertEquals(personToCreate.getEmail(), createdPerson.getEmail());
         assertNull(createdPerson.getAddress());
         assertEquals(0, createdPerson.getHobbies().size());
+    }
+
+    @Test
+    public void testAddPerson_IsAbleToCreateANewPerson_WithHobbies_AndNoAddress() {
+        Person personToCreate = new Person();
+        personToCreate.setFirstName("Morten");
+        personToCreate.setLastName("Poulsen");
+        personToCreate.setEmail("morten@poulsen.dk");
+
+        Hobby eatingHobby = new Hobby();
+        eatingHobby.setName("Eating");
+        eatingHobby.setDescription("I like to eat");
+
+        Hobby runningHobby = new Hobby();
+        runningHobby.setName("Running");
+        runningHobby.setDescription("Can run a mile");
+
+        personToCreate.getHobbies().add(eatingHobby);
+        personToCreate.getHobbies().add(runningHobby);
+
+        int numberOfPersons = this.personFacade.getPersons().size();
+
+        Person createdPerson = this.personFacade.addPerson(personToCreate);
+
+        assertEquals(numberOfPersons + 1, this.personFacade.getPersons().size());
+        assertNotNull(createdPerson);
+        assertEquals(personToCreate.getFirstName(), createdPerson.getFirstName());
+        assertEquals(personToCreate.getLastName(), createdPerson.getLastName());
+        assertEquals(personToCreate.getEmail(), createdPerson.getEmail());
+        assertNull(createdPerson.getAddress());
+        assertEquals(2, createdPerson.getHobbies().size());
+    }
+
+    @Test
+    public void testAddCompany_IsAbleToCreateANewCompany() {
+        Company companyToCreate = new Company();
+        companyToCreate.setCvr("123123123");
+        companyToCreate.setDescription("CompnayBedes");
+        companyToCreate.setName("fsiodjgsdfg");
+        companyToCreate.setMarketValue(1233453);
+        companyToCreate.setNumEmployees(9);
+
+        Company createdCompany = this.personFacade.addCompany(companyToCreate);
+
+        assertNotNull(createdCompany);
+        assertEquals(companyToCreate.getName(), createdCompany.getName());
+        assertEquals(companyToCreate.getCvr(), createdCompany.getCvr());
+        assertEquals(companyToCreate.getDescription(), createdCompany.getDescription());
+        assertEquals(companyToCreate.getMarketValue(), createdCompany.getMarketValue());
+        assertEquals(companyToCreate.getNumEmployees(), createdCompany.getNumEmployees());
     }
 }
