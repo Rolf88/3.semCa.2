@@ -1,7 +1,9 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -17,8 +19,8 @@ public class Person extends InfoEntity implements Serializable {
     @Column(nullable = false)
     private String lastName;
 
-    @ManyToMany
-    private List<Hobby> hobbies;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private List<Hobby> hobbies = new LinkedList<>();
 
     public String getFirstName() {
         return firstName;

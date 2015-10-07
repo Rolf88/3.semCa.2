@@ -11,6 +11,7 @@ import java.io.Closeable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 /**
@@ -43,11 +44,30 @@ public class PersonFacade implements Closeable {
 
     }
 
+    public List<Person> findPersonsWithHobby(String hobbyName) {
+        Query query = this.entityManager.createQuery("SELECT p FROM Person p INNER JOIN p.hobbies hob WHERE hob.name = :hobbyName");
+        query.setParameter("hobbyName", hobbyName);
+
+        return query.getResultList();
+    }
+
     public Company getCompany(String cvr) {
         Query query = this.entityManager.createQuery("SELECT c FROM Company c WHERE c.cvr = :cvr");
         query.setParameter("cvr", cvr);
 
         return (Company) query.getSingleResult();
+    }
+
+    public Person addPerson(Person person) {
+        if (person == null) {
+            throw new NullPointerException("person cannot be null");
+        }
+
+        this.entityManager.getTransaction().begin();
+        this.entityManager.persist(person);
+        this.entityManager.getTransaction().commit();
+
+        return person;
     }
 
     @Override
