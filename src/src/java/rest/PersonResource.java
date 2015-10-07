@@ -41,7 +41,11 @@ public class PersonResource {
      * Creates a new instance of PersonResource
      */
     public PersonResource() {
-        facade = new PersonFacade(Persistence.createEntityManagerFactory("3.semCa.3PU"));
+        this(new PersonFacade(Persistence.createEntityManagerFactory("3.semCa.3PU")));
+    }
+
+    public PersonResource(PersonFacade personFacade) {
+        this.facade = personFacade;
         gson = new Gson();
     }
 
@@ -59,10 +63,10 @@ public class PersonResource {
         if (p == null) {
             throw new NullPointerException();
         }
-        
+
         return p;
     }
-    
+
     @GET
     @Produces("application/json")
     @Path("contactinfo/{id}")
@@ -76,17 +80,17 @@ public class PersonResource {
         ContactInfoPerson cp = new ContactInfoPerson(p.getFirstName(), p.getLastName(), p.getPhones(), p.getEmail());
         return cp;
     }
-    
+
     @GET
     @Produces("application/json")
     @Path("complete")
     public List<Person> getPersonsComplete() {
         List<Person> p = facade.getPersons();
-        
-        if(p.isEmpty()){
+
+        if (p.isEmpty()) {
             throw new NullPointerException();
         }
-        
+
         return p;
     }
 
@@ -103,7 +107,7 @@ public class PersonResource {
 
         return cPersons;
     }
-    
+
     @PUT
     @Consumes("application/json")
     public void putJson(String content) {
