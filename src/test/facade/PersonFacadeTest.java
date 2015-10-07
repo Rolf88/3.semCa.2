@@ -171,7 +171,7 @@ public class PersonFacadeTest {
         assertNull(createdPerson.getAddress());
         assertEquals(2, createdPerson.getHobbies().size());
     }
-
+    
     @Test
     public void testAddCompany_IsAbleToCreateANewCompany() {
         Company companyToCreate = new Company();
