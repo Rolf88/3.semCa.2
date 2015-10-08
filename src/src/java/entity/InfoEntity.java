@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ public abstract class InfoEntity implements Serializable {
 
     
     @OneToMany(mappedBy = "entity", cascade = CascadeType.PERSIST)
-    private List<Phone> phones;
+    private List<Phone> phones = new ArrayList();
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Address address;
