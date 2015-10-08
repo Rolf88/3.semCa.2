@@ -11,6 +11,7 @@ import org.jmock.Expectations;
 import static org.jmock.Expectations.returnValue;
 import org.jmock.Mockery;
 import org.junit.Test;
+import rest.exceptions.PersonNotFoundException;
 
 /**
  *
@@ -20,8 +21,8 @@ public class PersonResourceTest {
 
     private Mockery context = new Mockery();
 
-    @Test(expected = NullPointerException.class)
-    public void testComplete_ThrowException_IfNoPersonsExists() {
+    @Test(expected = PersonNotFoundException.class)
+    public void testComplete_ThrowException_IfNoPersonsExists() throws PersonNotFoundException {
         final IPersonFacade personFacade = context.mock(IPersonFacade.class);
 
         context.checking(new Expectations() {
@@ -35,8 +36,8 @@ public class PersonResourceTest {
         resource.getPersonsComplete();
     }
 
-    @Test(expected = NullPointerException.class)
-    public void testContactInfo_ThrowException_IfNoPersonsExists() {
+    @Test(expected = PersonNotFoundException.class)
+    public void testContactInfo_ThrowException_IfNoPersonsExists() throws PersonNotFoundException {
         final IPersonFacade personFacade = context.mock(IPersonFacade.class);
 
         context.checking(new Expectations() {
