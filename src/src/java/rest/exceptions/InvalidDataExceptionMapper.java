@@ -8,12 +8,12 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class NullPointerExceptionMapper implements ExceptionMapper<NullPointerException> {
+public class InvalidDataExceptionMapper implements ExceptionMapper<InvalidDataException> {
 
     static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Override
-    public Response toResponse(NullPointerException ex) {
+    public Response toResponse(InvalidDataException ex) {
         ErrorMessage em = new ErrorMessage(ex, 400);
         return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(em)).type(MediaType.APPLICATION_JSON).build();
     }
