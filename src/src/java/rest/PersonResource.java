@@ -22,6 +22,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import rest.exceptions.InvalidDataException;
 import rest.exceptions.PersonNotFoundException;
 import rest.jsonconverter.JSONConverter;
 import rest.models.ContactInfoPerson;
@@ -147,11 +148,11 @@ public class PersonResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addPerson(String json) {
+    public Response addPerson(String json) throws InvalidDataException{
         Person p = gson.fromJson(json, Person.class);
-
-        if (p.getFirstName().isEmpty() || p.getLastName().isEmpty() || p.getEmail().isEmpty()) {
-            throw new NullPointerException("Firstname, lastname and email must be provided");
+        
+        if(p.getFirstName().isEmpty() || p.getLastName().isEmpty() || p.getEmail().isEmpty()){
+            throw new InvalidDataException("Firstname, lastname and email must be provided");
         }
 
         p = facade.addPerson(p);
