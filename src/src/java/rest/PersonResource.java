@@ -17,6 +17,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -76,7 +77,7 @@ public class PersonResource {
             throw new PersonNotFoundException("Person with given id not found");
         }
 
-        ContactInfoPerson cp = new ContactInfoPerson(p.getFirstName(), p.getLastName(), p.getPhones(), p.getEmail());
+        ContactInfoPerson cp = new ContactInfoPerson(p.getId(), p.getFirstName(), p.getLastName(), p.getPhones(), p.getEmail());
 
         return Response.ok(JSONConverter.ContactInfoPersonToJSON(cp)).build();
     }
@@ -107,7 +108,7 @@ public class PersonResource {
         List<ContactInfoPerson> cPersons = new ArrayList();
 
         for (Person p : persons) {
-            cPersons.add(new ContactInfoPerson(p.getFirstName(), p.getLastName(), p.getPhones(), p.getEmail()));
+            cPersons.add(new ContactInfoPerson(p.getId(), p.getFirstName(), p.getLastName(), p.getPhones(), p.getEmail()));
         }
 
         return Response.ok(JSONConverter.ContactInfoPersonToJSON(cPersons)).build();
@@ -126,7 +127,7 @@ public class PersonResource {
         List<ContactInfoPerson> cPersons = new ArrayList();
 
         for (Person p : persons) {
-            cPersons.add(new ContactInfoPerson(p.getFirstName(), p.getLastName(), p.getPhones(), p.getEmail()));
+            cPersons.add(new ContactInfoPerson(p.getId(), p.getFirstName(), p.getLastName(), p.getPhones(), p.getEmail()));
         }
 
         return Response.ok(JSONConverter.ContactInfoPersonToJSON(cPersons)).build();
@@ -148,15 +149,22 @@ public class PersonResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addPerson(String json) throws InvalidDataException{
+    public Response addPerson(String json) throws InvalidDataException {
         Person p = gson.fromJson(json, Person.class);
-        
-        if(p.getFirstName().isEmpty() || p.getLastName().isEmpty() || p.getEmail().isEmpty()){
+
+        if (p.getFirstName().isEmpty() || p.getLastName().isEmpty() || p.getEmail().isEmpty()) {
             throw new InvalidDataException("Firstname, lastname and email must be provided");
         }
 
         p = facade.addPerson(p);
 
         return Response.status(Response.Status.CREATED).entity(JSONConverter.PersonToJSON(p)).build();
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void removePerson(@PathParam("id") Integer id) {
+        Person p = facade.getPerson(id);
+        facade.deletePerson(p);
     }
 }

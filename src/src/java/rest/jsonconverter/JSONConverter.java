@@ -23,7 +23,7 @@ public class JSONConverter {
 
         return new Gson().toJson(personsArr);
     }
-    
+
     public static String ContactInfoPersonToJSON(ContactInfoPerson person) {
         return new Gson().toJson(ContactInfoPersonToJsonObject(person));
     }
@@ -36,7 +36,6 @@ public class JSONConverter {
 
         return new Gson().toJson(personsArr);
     }
-    
 
     private static JsonObject PersonToJsonObject(Person person) {
         JsonObject obj = new JsonObject();
@@ -46,6 +45,22 @@ public class JSONConverter {
         obj.addProperty("email", person.getEmail());
         obj.addProperty("id", person.getId().toString());
 
+        JsonObject addr = new JsonObject();
+
+        if (person.getAddress() != null) {
+
+            addr.addProperty("street", person.getAddress().getStreet());
+            addr.addProperty("additionalInfo", person.getAddress().getAdditionalInfo());
+
+            if (person.getAddress().getCity() != null) {
+                JsonObject city = new JsonObject();
+                city.addProperty("city", person.getAddress().getCity().getCity());
+                city.addProperty("zip", person.getAddress().getCity().getZip());
+                
+                addr.add("city", city);
+            }
+            obj.add("address", addr);
+        }
         JsonArray hobs = new JsonArray();
         JsonArray phones = new JsonArray();
 
@@ -72,10 +87,11 @@ public class JSONConverter {
 
     private static JsonObject ContactInfoPersonToJsonObject(ContactInfoPerson person) {
         JsonObject obj = new JsonObject();
+        obj.addProperty("id", person.getId());
         obj.addProperty("firstName", person.getFirstName());
         obj.addProperty("lastName", person.getLastName());
         obj.addProperty("email", person.getEmail());
-        
+
         JsonArray phones = new JsonArray();
 
         for (Phone phone : person.getPhones()) {
@@ -85,7 +101,7 @@ public class JSONConverter {
             ph.addProperty("description", phone.getDescription());
             phones.add(ph);
         }
-        
+
         obj.add("phones", phones);
         return obj;
     }

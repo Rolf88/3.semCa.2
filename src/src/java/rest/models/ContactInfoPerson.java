@@ -9,11 +9,21 @@ public class ContactInfoPerson {
     private String lastName;
     private List<Phone> phones;
     private String email;
+    private Long id;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     public ContactInfoPerson() {
     }
 
-    public ContactInfoPerson(String firstName, String lastName, List<Phone> phones, String email) {
+    public ContactInfoPerson(Long id, String firstName, String lastName, List<Phone> phones, String email) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phones = phones;
