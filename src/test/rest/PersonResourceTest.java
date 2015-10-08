@@ -79,5 +79,37 @@ public class PersonResourceTest {
 
         PersonResource resource = new PersonResource(personFacade);
         resource.getPersonComplete(1);
+    }   
+
+    @Test(expected = PersonNotFoundException.class)
+    public void testContactInfoPersonByHobby_ThrowException_IfNoPersonsExists() throws PersonNotFoundException {
+        final IPersonFacade personFacade = context.mock(IPersonFacade.class);
+        final String hobbyName = "randomHobbyName";
+        
+        context.checking(new Expectations() {
+            {
+                oneOf(personFacade).findPersonsWithHobby(hobbyName);
+                will(returnValue(new ArrayList<>()));
+            }
+        });
+
+        PersonResource resource = new PersonResource(personFacade);
+        resource.getContactInfoPersonByHobby(hobbyName);
+    }  
+
+    @Test(expected = PersonNotFoundException.class)
+    public void testCompletePersonByHobby_ThrowException_IfNoPersonsExists() throws PersonNotFoundException {
+        final IPersonFacade personFacade = context.mock(IPersonFacade.class);
+        final String hobbyName = "randomHobbyName";
+        
+        context.checking(new Expectations() {
+            {
+                oneOf(personFacade).findPersonsWithHobby(hobbyName);
+                will(returnValue(new ArrayList<>()));
+            }
+        });
+
+        PersonResource resource = new PersonResource(personFacade);
+        resource.getCompletePersonByHobby(hobbyName);
     }
 }
