@@ -43,7 +43,6 @@ public class JSONConverter {
         obj.addProperty("firstName", person.getFirstName());
         obj.addProperty("lastName", person.getLastName());
         obj.addProperty("email", person.getEmail());
-        obj.addProperty("id", person.getId().toString());
 
         JsonObject addr = new JsonObject();
 
