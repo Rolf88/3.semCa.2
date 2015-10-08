@@ -50,4 +50,34 @@ public class PersonResourceTest {
         PersonResource resource = new PersonResource(personFacade);
         resource.getPersonsContactInfo();
     }
+    
+    @Test(expected = PersonNotFoundException.class)
+    public void testContactInfo_ById_ThrowException_IfNoPersonsExists() throws PersonNotFoundException {
+        final IPersonFacade personFacade = context.mock(IPersonFacade.class);
+
+        context.checking(new Expectations() {
+            {
+                oneOf(personFacade).getPerson(1);
+                will(returnValue(null));
+            }
+        });
+
+        PersonResource resource = new PersonResource(personFacade);
+        resource.getPersonContactInfo(1);
+    }
+    
+    @Test(expected = PersonNotFoundException.class)
+    public void testComplete_ById_ThrowException_IfNoPersonsExists() throws PersonNotFoundException {
+        final IPersonFacade personFacade = context.mock(IPersonFacade.class);
+
+        context.checking(new Expectations() {
+            {
+                oneOf(personFacade).getPerson(1);
+                will(returnValue(null));
+            }
+        });
+
+        PersonResource resource = new PersonResource(personFacade);
+        resource.getPersonComplete(1);
+    }
 }
