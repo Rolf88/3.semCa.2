@@ -12,23 +12,13 @@
                 <th>Lastname</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead> 
         <tbody> 
-            <tr>
-                <td>Test</td>
-                <td>Test</td>
-                <td>Test</td>
-                <td>Test</td>
-            </tr>
-            <tr>
-                <td>Test</td>
-                <td>Test</td>
-                <td>Test</td>
-                <td>Test</td>
-            </tr>
         </tbody>
     </table>
-    <div class="btn btn-success">Refresh</div>
+    <div class="btn btn-success" id="refresh">Refresh</div>
     <div class="btn btn-info">Add new person</div>
 </t:wrapper>

@@ -12,7 +12,7 @@ INSERT INTO address (`STREET`, `ADDITIONALINFO`, `CITY_ID`) VALUES ('Hawaiivej 3
 SET @Address3Id = LAST_INSERT_ID();
 
 
-INSERT INTO infoentity (`DTYPE`, `EMAIL`, `ADDRESS_ID`) VALUES ('Person', null, @AddressId);
+INSERT INTO infoentity (`DTYPE`, `EMAIL`, `ADDRESS_ID`) VALUES ('Person', 'hahaha@ha.dk', @AddressId);
 SET @PersonId = LAST_INSERT_ID();
 INSERT INTO Person (Id, firstName, lastName) VALUES (@PersonId, 'Kim', 'Larsen');
 INSERT INTO Hobby (`NAME`, `DESCRIPTION`) VALUES ('Fishing', 'Likes to fish');
@@ -25,11 +25,11 @@ SET @CompanyId = LAST_INSERT_ID();
 INSERT INTO company (Id, `NAME`, `DESCRIPTION`, `CVR`, `MARKETVALUE`, `NUMEMPLOYEES`) VALUES (@CompanyId, 'MyCompany', 'MyCompany test description', 123456789, 234, 4);
 
 
-INSERT INTO infoentity (`DTYPE`, `EMAIL`, `ADDRESS_ID`) VALUES ('Person', null, @AddressId);
+INSERT INTO infoentity (`DTYPE`, `EMAIL`, `ADDRESS_ID`) VALUES ('Person', 'hovhov@hov.dk', @AddressId);
 SET @PersonId = LAST_INSERT_ID();
 INSERT INTO Person (Id, firstName, lastName) VALUES (@PersonId, 'Lukasz', 'Mogensen');
 
 
-INSERT INTO infoentity (`DTYPE`, `EMAIL`, `ADDRESS_ID`) VALUES ('Person', null, @Address3Id);
+INSERT INTO infoentity (`DTYPE`, `EMAIL`, `ADDRESS_ID`) VALUES ('Person', 'hejhej@hej.dk', @Address3Id);
 SET @PersonId = LAST_INSERT_ID();
 INSERT INTO Person (Id, firstName, lastName) VALUES (@PersonId, 'Brian', 'Sandberg');
