@@ -62,7 +62,7 @@ public class PersonResource {
         if (p == null) {
             throw new PersonNotFoundException("Person with given id not found");
         }
-        
+
         return Response.ok(JSONConverter.PersonToJSON(p)).build();
     }
 
@@ -77,7 +77,7 @@ public class PersonResource {
         }
 
         ContactInfoPerson cp = new ContactInfoPerson(p.getFirstName(), p.getLastName(), p.getPhones(), p.getEmail());
-        
+
         return Response.ok(JSONConverter.ContactInfoPersonToJSON(cp)).build();
     }
 
@@ -90,7 +90,7 @@ public class PersonResource {
         if (p.isEmpty()) {
             throw new PersonNotFoundException("No persons found");
         }
-        
+
         return Response.ok(JSONConverter.PersonToJSON(p)).build();
     }
 
@@ -99,21 +99,52 @@ public class PersonResource {
     @Path("contactinfo")
     public Response getPersonsContactInfo() throws PersonNotFoundException {
         List<Person> persons = facade.getPersons();
-        
-        if(persons.isEmpty()){
+
+        if (persons.isEmpty()) {
             throw new PersonNotFoundException("No persons found");
         }
-        
+
         List<ContactInfoPerson> cPersons = new ArrayList();
 
         for (Person p : persons) {
             cPersons.add(new ContactInfoPerson(p.getFirstName(), p.getLastName(), p.getPhones(), p.getEmail()));
         }
-       
 
         return Response.ok(JSONConverter.ContactInfoPersonToJSON(cPersons)).build();
     }
-    
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("contactinfo/hobby/{hobby}")
+    public Response getContactInfoPersonByHobby(@PathParam("hobby") String hobby) throws PersonNotFoundException {
+        List<Person> persons = facade.findPersonsWithHobby(hobby);
+
+        if (persons.isEmpty()) {
+            throw new PersonNotFoundException("No persons found with given hobby");
+        }
+
+        List<ContactInfoPerson> cPersons = new ArrayList();
+
+        for (Person p : persons) {
+            cPersons.add(new ContactInfoPerson(p.getFirstName(), p.getLastName(), p.getPhones(), p.getEmail()));
+        }
+
+        return Response.ok(JSONConverter.ContactInfoPersonToJSON(cPersons)).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("complete/hobby/{hobby}")
+    public Response getCompletePersonByHobby(@PathParam("hobby") String hobby) throws PersonNotFoundException {
+        List<Person> p = facade.findPersonsWithHobby(hobby);
+
+        if (p.isEmpty()) {
+            throw new PersonNotFoundException("No persons found");
+        }
+
+        return Response.ok(JSONConverter.PersonToJSON(p)).build();
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -123,9 +154,9 @@ public class PersonResource {
         if(p.getFirstName().isEmpty() || p.getLastName().isEmpty() || p.getEmail().isEmpty()){
             throw new InvalidDataException("Firstname, lastname and email must be provided");
         }
-        
+
         p = facade.addPerson(p);
-        
+
         return Response.status(Response.Status.CREATED).entity(JSONConverter.PersonToJSON(p)).build();
     }
 }
