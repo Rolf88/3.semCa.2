@@ -19,7 +19,7 @@ import rest.exceptions.PersonNotFoundException;
  */
 public class PersonResourceTest {
 
-    private Mockery context = new Mockery();
+    private final Mockery context = new Mockery();
 
     @Test(expected = PersonNotFoundException.class)
     public void testComplete_ThrowException_IfNoPersonsExists() throws PersonNotFoundException {
