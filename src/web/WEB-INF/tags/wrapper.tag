@@ -25,7 +25,13 @@
             <ul class="nav nav-tabs">
                 <li role="presentation"><a href="index.jsp">Home</a></li>
                 <li role="presentation"><a href="person.jsp">Person</a></li>
-                <li role="presentation"><a href="documentation.jsp">Documentation</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentaton<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="api.jsp">API Help</a></li>
+                        <li><a href="documentation.jsp">GITHub links</a></li>
+                    </ul>
+                </li>
             </ul>
             <jsp:doBody />
         </div>

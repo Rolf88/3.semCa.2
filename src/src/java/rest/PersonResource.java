@@ -6,6 +6,7 @@
 package rest;
 
 import com.google.gson.Gson;
+import deploy.DeploymentConfiguration;
 import entity.Person;
 import facade.PersonFacade;
 import infrastructure.IPersonFacade;
@@ -47,7 +48,7 @@ public class PersonResource {
      * Creates a new instance of PersonResource
      */
     public PersonResource() {
-        this(new PersonFacade(Persistence.createEntityManagerFactory("3.semCa.3PU")));
+        this(new PersonFacade(Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME)));
     }
 
     public PersonResource(IPersonFacade personFacade) {
