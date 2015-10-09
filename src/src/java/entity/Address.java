@@ -23,7 +23,7 @@ public class Address implements Serializable {
     @Column(nullable = false)
     private String street;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String additionalInfo;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

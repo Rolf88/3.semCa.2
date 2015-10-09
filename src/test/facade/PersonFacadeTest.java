@@ -223,13 +223,53 @@ public class PersonFacadeTest {
     public void testDeletePerson_ShouldThrowExceptionIfPersonIsNull() {
         this.personFacade.deletePerson(null);
     }
-    
+
     @Test
     public void testDeletePerson_IsAbleToDelete() {
         Person person = this.personFacade.getPerson(1);
-        
+
         this.personFacade.deletePerson(person);
-        
+
         assertEquals(2, this.personFacade.getPersons().size());
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void testUpdatePerson_ThrowException_IfPersonIsNull(){
+        this.personFacade.updatePerson(null);
+    }
+
+    @Test
+    public void testUpdatePerson_IsAbleToUpdate() {
+        Person person = this.personFacade.getPerson(1);
+        person.setFirstName("Brian");
+        person.setLastName("Madsen");
+        person.getHobbies().remove(0);
+
+        person.getAddress().setStreet("Testvej 2");
+        person.getAddress().setAdditionalInfo(null);
+
+        CityInfo city = new CityInfo();
+        city.setCity("Smørum");
+        city.setZip("2765");
+
+        person.getAddress().setCity(city);
+
+        this.personFacade.updatePerson(person);
+
+        Person updatedPerson = this.personFacade.getPerson(1);
+        assertNotNull("person is null", updatedPerson);
+        assertEquals(person.getFirstName(), updatedPerson.getFirstName());
+        assertEquals(person.getLastName(), updatedPerson.getLastName());
+
+        assertNotNull(updatedPerson.getHobbies());
+        assertEquals(person.getHobbies().size(), updatedPerson.getHobbies().size());
+
+        assertNotNull(updatedPerson.getAddress());
+        assertEquals(person.getAddress().getStreet(), updatedPerson.getAddress().getStreet());
+        assertEquals(person.getAddress().getAdditionalInfo(), updatedPerson.getAddress().getAdditionalInfo());
+
+        assertNotNull(updatedPerson.getAddress().getCity());
+        assertEquals(person.getAddress().getCity().getCity(), updatedPerson.getAddress().getCity().getCity());
+        assertEquals(person.getAddress().getCity().getZip(), updatedPerson.getAddress().getCity().getZip());
     }
 }

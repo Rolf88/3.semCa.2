@@ -30,4 +30,6 @@ public interface IPersonFacade {
     List<Person> getPersons();
 
     List<Person> getPersons(String zipCode);
+    
+    void updatePerson(Person person);
 }
