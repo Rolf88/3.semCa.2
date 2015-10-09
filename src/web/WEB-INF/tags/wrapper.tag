@@ -28,8 +28,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentaton<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="api.jsp">API Help</a></li>
-                        <li><a href="documentation.jsp">GITHub links</a></li>
+                        <li><a href="documentation.jsp">API Help</a></li>
+                        <li><a href="github.jsp">GITHub links</a></li>
                     </ul>
                 </li>
             </ul>
