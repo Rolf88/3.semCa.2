@@ -20,6 +20,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -166,5 +167,18 @@ public class PersonResource {
     public void removePerson(@PathParam("id") Integer id) {
         Person p = facade.getPerson(id);
         facade.deletePerson(p);
+    }
+    
+    @PUT
+    public Response updatePerson(String json) throws InvalidDataException{
+        Person p = gson.fromJson(json, Person.class);
+        
+        if (p.getFirstName().isEmpty() || p.getLastName().isEmpty() || p.getEmail().isEmpty()) {
+            throw new InvalidDataException("Firstname, lastname and email must be provided");
+        }
+        
+        p = facade.updatePerson(p);
+        
+        return Response.status(Response.Status.OK).entity(JSONConverter.PersonToJSON(p)).build();
     }
 }

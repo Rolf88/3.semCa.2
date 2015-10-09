@@ -31,5 +31,5 @@ public interface IPersonFacade {
 
     List<Person> getPersons(String zipCode);
     
-    void updatePerson(Person person);
+    Person updatePerson(Person person);
 }

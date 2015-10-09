@@ -10,6 +10,7 @@ import facade.PersonFacade;
 import infrastructure.IPersonFacade;
 import java.util.ArrayList;
 import org.jmock.Expectations;
+import static org.jmock.Expectations.any;
 import static org.jmock.Expectations.returnValue;
 import org.jmock.Mockery;
 import org.junit.Test;
@@ -153,5 +154,20 @@ public class PersonResourceTest {
         final String json = " { \"firstName\": \"Oliver\", \"lastName\": \"Lassen\", \"email\": \"o@t.dk\" }";
         final PersonResource personResource = new PersonResource(personFacade);
         personResource.addPerson(json);
+    }
+
+    @Test
+    public void testUpdatePerson_ShouldCall_UpdatePersonOnFacade() throws InvalidDataException {
+        final IPersonFacade personFacade = context.mock(IPersonFacade.class);
+        context.checking(new Expectations() {
+            {
+                oneOf(personFacade).updatePerson(with(any(Person.class)));
+                will(returnValue(new Person()));
+            }
+        });
+        
+        final String json = " { \"firstName\": \"Oliver\", \"lastName\": \"Lassen\", \"email\": \"o@t.dk\" }";
+        final PersonResource personResource = new PersonResource(personFacade);
+        personResource.updatePerson(json);
     }
 }

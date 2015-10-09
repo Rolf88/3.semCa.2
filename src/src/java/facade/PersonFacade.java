@@ -106,13 +106,15 @@ public class PersonFacade implements Closeable, IPersonFacade {
     }
 
     @Override
-    public void updatePerson(Person person) {
-        if (person == null){
+    public Person updatePerson(Person person) {
+        if (person == null) {
             throw new NullPointerException("person");
         }
-        
+
         this.entityManager.getTransaction().begin();
         this.entityManager.merge(person);
         this.entityManager.getTransaction().commit();
+
+        return person;
     }
 }
