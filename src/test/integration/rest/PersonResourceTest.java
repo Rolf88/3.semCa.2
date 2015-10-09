@@ -48,17 +48,18 @@ public class PersonResourceTest {
         
         assertNotNull(contacts);
     }
-
+    
     @Test
-    public void testGetPersonsComplete() {
+    public void testAddPerson(){
+        given().contentType(MediaType.APPLICATION_JSON)
+                .body("{'firstName':'Peter','lastName':'Hansen','email':'Peter@hansen.dk'}")
+                .when()
+                .post("")
+                .then()
+                .statusCode(Response.Status.CREATED.getStatusCode())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("firstName", equalTo("Peter"))
+                .body("lastName", equalTo("Hansen"))
+                .body("email", equalTo("Peter@hansen.dk"));
     }
-
-    @Test
-    public void testGetPersonsContactInfo() {
-    }
-
-    @Test
-    public void testPutJson() {
-    }
-
 }
