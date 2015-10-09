@@ -20,8 +20,8 @@ $(document).ready(function () {
         var $this = $(this),
                 $container = $this.parents("tr").first(),
                 personid = $container.data("id");
-                $("#myupdateform").data("personid", personid);
-                $("#updatePersonModal").modal("show");
+        $("#myupdateform").data("personid", personid);
+        $("#updatePersonModal").modal("show");
 
         e.preventDefault();
         getPerson();
@@ -106,12 +106,19 @@ function addNewPerson() {
                 lastName: $("#lastnameinput").val(),
                 email: $("#emailinput").val(),
                 phones: [{number: $("#phoneinput").val()}],
-                adress: $("#adressinput").val(),
-                city: $("#cityinput").val(),
-                zipcode: $("#zipcodeinput").val(),
-                hobby: $("#hobbyinput").val()
+                address: {
+                    street: $("#adressinput").val(),
+                    additionalInfo: "",
+                    city: {
+                        city: $("#cityinput").val(),
+                        zip: $("#zipcodeinput").val()
+                    }
+                },
+                hobbies: [{
+                        name: $("#hobbyinput").val(),
+                        description: ""
+                    }]
             })
-
         });
         e.preventDefault();
     });
@@ -131,10 +138,18 @@ function updateNewPerson() {
                 lastName: $("#updatelastname").val(),
                 email: $("#updateemail").val(),
                 phones: [{number: $("#updatephone").val()}],
-                adress: $("#updateadress").val(),
-                city: $("#updatecity").val(),
-                zipcode: $("#updatezipcode").val(),
-                hobby: $("#updatehobby").val()
+                address: {
+                    street: $("#adressinput").val(),
+                    additionalInfo: "",
+                    city: {
+                        city: $("#cityinput").val(),
+                        zip: $("#zipcodeinput").val()
+                    }
+                },
+                hobbies: [{
+                        name: $("#hobbyinput").val(),
+                        description: ""
+                    }]
             })
 
         });
