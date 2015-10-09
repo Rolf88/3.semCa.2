@@ -20,11 +20,11 @@ $(document).ready(function () {
         var $this = $(this),
                 $container = $this.parents("tr").first(),
                 personid = $container.data("id");
+                
         $("#myupdateform").data("personid", personid);
         $("#updatePersonModal").modal("show");
 
         e.preventDefault();
-        getPerson();
     });
 
     $("#personTable").on("click", "a[href='#delete']", function (e) {
@@ -36,10 +36,11 @@ $(document).ready(function () {
             method: "DELETE",
             contentType: "application/json",
             url: "/3.semCa.2/api/person/" + personid
+        }).then(function () {
+            getPerson();
         });
 
         e.preventDefault();
-        getPerson();
     });
 });
 
@@ -119,6 +120,9 @@ function addNewPerson() {
                         description: ""
                     }]
             })
+        }).then(function(){
+            $("#addPersonModal").modal("hide");
+            getPerson();
         });
         e.preventDefault();
     });
@@ -152,7 +156,11 @@ function updateNewPerson() {
                     }]
             })
 
+        }).then(function(){
+            $("#updatePersonModal").modal("hide");
+            getPerson();
         });
+        
         e.preventDefault();
     });
 }
