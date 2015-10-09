@@ -11,9 +11,6 @@
 
                     <h4>HttpMethod</h4>
                     <kbd>GET</kbd>
-
-                    <h4>Parameters</h4>
-                    <kbd>{id} = int</kbd>
                 </div>
             </td>
             <td>
@@ -137,9 +134,6 @@
 
                     <h4>HttpMethod</h4>
                     <kbd>GET</kbd>
-
-                    <h4>Parameters</h4>
-                    <kbd>{id} = int</kbd>
                 </div>
             </td>
             <td>
@@ -313,14 +307,12 @@
   "email": "test@test.dk",
   "hobbies": [
     {
-      "id": 1,
       "name": "Fodbold",
       "description": "Fodbold..."
     }
   ],
   "phones": [
     {
-      "id": 1,
       "number": 12345678,
       "description": "Home"
     }
@@ -388,14 +380,12 @@
   "email": "test@test.dk",
   "hobbies": [
     {
-      "id": 1,
       "name": "Fodbold",
       "description": "Fodbold..."
     }
   ],
   "phones": [
     {
-      "id": 1,
       "number": 12345678,
       "description": "Home"
     }
