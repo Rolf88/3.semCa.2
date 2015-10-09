@@ -8,6 +8,25 @@ $(document).ready(function () {
         getPersonByHobby();
     });
 
+    $("#addPersonBtn").click(function () {
+        addNewPerson();
+    });
+
+    $("#updatePersonBtn").click(function () {
+        updateNewPerson();
+    });
+
+    $("#personTable").on("click", "a[href='#update']", function (e) {
+        var $this = $(this),
+                $container = $this.parents("tr").first(),
+                personid = $container.data("id");
+        $("#myupdateform").data("personid", personid);
+        $("#updatePersonModal").modal("show");
+
+        e.preventDefault();
+        getPerson();
+    });
+
     $("#personTable").on("click", "a[href='#delete']", function (e) {
         var $this = $(this),
                 $container = $this.parents("tr").first(),
@@ -43,7 +62,8 @@ var Utils = {
                         $(document.createElement("td")).append(
                         $(document.createElement("a")).attr({href: "#delete"}).text("delete"))
                         )
-                .append($(document.createElement("td")).append($(document.createElement("a")).attr({href: "#update"}).text("edit"))
+                .append($(document.createElement("td")).append(
+                        $(document.createElement("a")).attr({href: "#update"}).text("edit"))
                         );
     }
 };
@@ -86,10 +106,50 @@ function addNewPerson() {
                 lastName: $("#lastnameinput").val(),
                 email: $("#emailinput").val(),
                 phones: [{number: $("#phoneinput").val()}],
-                adress: $("#adressinput").val(),
-                city: $("#cityinput").val(),
-                zipcode: $("#zipcodeinput").val(),
-                hobby: $("#hobbyinput").val()
+                address: {
+                    street: $("#adressinput").val(),
+                    additionalInfo: "",
+                    city: {
+                        city: $("#cityinput").val(),
+                        zip: $("#zipcodeinput").val()
+                    }
+                },
+                hobbies: [{
+                        name: $("#hobbyinput").val(),
+                        description: ""
+                    }]
+            })
+        });
+        e.preventDefault();
+    });
+}
+
+function updateNewPerson() {
+
+    $("#myupdateform").submit(function (e) {
+        var personid = $(this).data("personid");
+        $.ajax({
+            method: "PUT",
+            contentType: "application/json",
+            url: "/3.semCa.2/api/person",
+            data: JSON.stringify({
+                id: personid,
+                firstName: $("#updatefirstname").val(),
+                lastName: $("#updatelastname").val(),
+                email: $("#updateemail").val(),
+                phones: [{number: $("#updatephone").val()}],
+                address: {
+                    street: $("#adressinput").val(),
+                    additionalInfo: "",
+                    city: {
+                        city: $("#cityinput").val(),
+                        zip: $("#zipcodeinput").val()
+                    }
+                },
+                hobbies: [{
+                        name: $("#hobbyinput").val(),
+                        description: ""
+                    }]
             })
 
         });
