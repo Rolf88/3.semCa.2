@@ -20,9 +20,11 @@ $(document).ready(function () {
         var $this = $(this),
                 $container = $this.parents("tr").first(),
                 personid = $container.data("id");
-                
+
         $("#myupdateform").data("personid", personid);
-        $("#updatePersonModal").modal("show");
+        updateUpdateForm(personid).then(function () {
+            $("#updatePersonModal").modal("show");
+        });
 
         e.preventDefault();
     });
@@ -68,6 +70,31 @@ var Utils = {
                         );
     }
 };
+
+function updateUpdateForm(personId) {
+    return $.ajax({
+        method: "GET",
+        url: "/3.semCa.2/api/person/complete/" + personId
+    }).then(function (response) {
+        $("#updatefirstname").val(response.firstName);
+        $("#updatelastname").val(response.lastName);
+        $("#updateemail").val(response.email);
+
+        if (response.phones.length > 0) {
+            $("#updatephone").val(response.phones[0].number);
+        }
+
+        if (typeof (response.address) !== "undefined") {
+            $("#updateadress").val(response.address.street);
+            $("#updatecity").val(response.address.city.city);
+            $("#updatezipcode").val(response.address.city.zip);
+        }
+
+        if (response.hobbies.length > 0) {
+            $("#updatehobby").val(response.hobbies[0].name);
+        }
+    });
+}
 
 function getPerson() {
     $.ajax({
@@ -120,7 +147,7 @@ function addNewPerson() {
                         description: ""
                     }]
             })
-        }).then(function(){
+        }).then(function () {
             $("#addPersonModal").modal("hide");
             getPerson();
         });
@@ -143,24 +170,24 @@ function updateNewPerson() {
                 email: $("#updateemail").val(),
                 phones: [{number: $("#updatephone").val()}],
                 address: {
-                    street: $("#adressinput").val(),
+                    street: $("#updateadress").val(),
                     additionalInfo: "",
                     city: {
-                        city: $("#cityinput").val(),
-                        zip: $("#zipcodeinput").val()
+                        city: $("#updatecity").val(),
+                        zip: $("#updatezipcode").val()
                     }
                 },
                 hobbies: [{
-                        name: $("#hobbyinput").val(),
+                        name: $("#updatehobby").val(),
                         description: ""
                     }]
             })
 
-        }).then(function(){
+        }).then(function () {
             $("#updatePersonModal").modal("hide");
             getPerson();
         });
-        
+
         e.preventDefault();
     });
 }
