@@ -324,7 +324,17 @@
       "number": 12345678,
       "description": "Home"
     }
-  ]
+  ],
+    "address":
+    {
+        "street" : "Min vej",
+        "additionalInfo" : "Dette er her jeg bor",
+        "city" :
+        {
+            "city" : "Min by",
+            "zip" : "1452"
+        }
+    }
 }</pre>
                 
                 <h4>Response</h4>
@@ -389,7 +399,17 @@
       "number": 12345678,
       "description": "Home"
     }
-  ]
+  ],
+    "address":
+    {
+        "street" : "Min vej",
+        "additionalInfo" : "Dette er her jeg bor",
+        "city" :
+        {
+            "city" : "Min by",
+            "zip" : "1452"
+        }
+    }
 }</pre>
                 <h4>Response</h4>
                 <table class="table">
