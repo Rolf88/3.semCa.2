@@ -40,7 +40,7 @@
       <property name="javax.persistence.sql-load-script-source" value="script/test-database-init.sql"/>
     </properties>
   </persistence-unit>
-  <persistence-unit name="pu_OPENSHIFT " transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="pu_OPENSHIFT" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <non-jta-data-source>java:/comp/env/jdbc/MySQLDS</non-jta-data-source>
     <class>entity.Person</class>
