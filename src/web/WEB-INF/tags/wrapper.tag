@@ -40,6 +40,7 @@
                         <li><a href="test.jsp">Test results</a></li>
                         <li><a href="whodidwhat.jsp">Who did what</a></li>
                         <li><a href="inheritance.jsp">Inheritance implementation</a></li>
+                        <li><a href="howtotest.jsp">How to test</a></li>
                     </ul>
                 </li>
             </ul>
