@@ -28,7 +28,7 @@ public class PersonResourceTest {
                 .body("firstName", equalTo("Kim"))
                 .body("lastName", equalTo("Larsen"));
     }
-    
+
     @Test
     public void testContactInfo_ShouldReturn404_IfNoContactInfoExists() {
         when().get("/contactinfo/9999")
@@ -45,14 +45,17 @@ public class PersonResourceTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .extract()
                 .as(ContactInfoPerson[].class);
-        
+
         assertNotNull(contacts);
     }
-    
+
     @Test
-    public void testAddPerson(){
+    public void testAddPerson() {
+        final String json = " { \"firstName\": \"Peter\", \"lastName\": \"Hansen\", \"email\": \"Peter@hansen.dk\" }";
+
         given().contentType(MediaType.APPLICATION_JSON)
-                .body("{'firstName':'Peter','lastName':'Hansen','email':'Peter@hansen.dk'}")
+                .authentication().basic("ca2-admini", "123123qwe")
+                .body(json)
                 .when()
                 .post("")
                 .then()
