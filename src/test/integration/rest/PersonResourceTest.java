@@ -48,17 +48,4 @@ public class PersonResourceTest {
         
         assertNotNull(contacts);
     }
-
-    @Test
-    public void testGetPersonsComplete() {
-    }
-
-    @Test
-    public void testGetPersonsContactInfo() {
-    }
-
-    @Test
-    public void testPutJson() {
-    }
-
 }
