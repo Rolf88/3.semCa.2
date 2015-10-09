@@ -25,6 +25,7 @@
             <ul class="nav nav-tabs">
                 <li role="presentation"><a href="index.jsp">Home</a></li>
                 <li role="presentation"><a href="person.jsp">Person</a></li>
+                <li role="presentation"><a href="documentation.jsp">Documentation</a></li>
             </ul>
             <jsp:doBody />
         </div>
